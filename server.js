@@ -7,6 +7,7 @@ const db = require('./data/dbConfig')
 
 server.use(express.json());
 server.use(session({
+    name: 'identifier',
     resave: false,
     saveUninitialized: false,
     secret: 'bah weep grana weep ninny bon',

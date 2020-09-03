@@ -54,7 +54,7 @@ router.post("/login", async (req, res, next) => {
 		// if they don't match, return with error
 		if (!passwordValid) {
 			return res.status(401).json({
-				message: "Invalid Credentials",
+				message: "You shall not pass!",
 			})
 		}
 
@@ -68,6 +68,21 @@ router.post("/login", async (req, res, next) => {
 		})
 	} catch(err) {
 		next(err)
+	}
+})
+
+// LOGOUT
+router.get("/logout", async (req, res, next) => {
+	try {
+		req.session.destroy((error) => {
+			if (error) {
+				next(error)
+			} else {
+				res.status(204).end()
+			}
+		})
+	} catch (error) {
+		next(error)
 	}
 })
 
