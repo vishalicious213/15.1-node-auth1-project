@@ -1,11 +1,12 @@
 const express = require('express')
 const Users = require('./users-model')
 const bcrypt = require('bcryptjs')
+const usersMiddleware = require('./users-middleware')
 
 const router = express.Router()
 
 // GET all users
-router.get('/users', async (req, res, next) => {
+router.get('/users', usersMiddleware.restrict(), async (req, res, next) => {
     try {
         res.json(await Users.findAll())
     } catch(error) {
@@ -13,7 +14,7 @@ router.get('/users', async (req, res, next) => {
     }
 })
 
-// ADD user
+// ADD user (register)
 router.post("/register", async (req, res, next) => {
 	try {
 		const { username, password } = req.body
@@ -72,7 +73,7 @@ router.post("/login", async (req, res, next) => {
 })
 
 // LOGOUT
-router.get("/logout", async (req, res, next) => {
+router.get("/logout", usersMiddleware.restrict(), async (req, res, next) => {
 	try {
 		req.session.destroy((error) => {
 			if (error) {
