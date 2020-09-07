@@ -78,7 +78,11 @@ router.get("/logout", async (req, res, next) => {
 			if (error) {
 				next(error)
 			} else {
-				res.status(204).end()
+                // res.status(204).end()
+                res.status(204).json({
+                    message: "Logged out",
+                })
+                res.end()
 			}
 		})
 	} catch (error) {
